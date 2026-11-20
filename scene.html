@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>LEONIDA W-2AG — 2026</title>
+<style>
+  @font-face {
+    font-family: "Anton";
+    src: url("assets/Anton-Regular.ttf") format("truetype");
+    font-weight: 400;
+  }
+  :root {
+    --ink: #191419;
+    --magenta: #c41c83;
+    --hot: #ff4fa8;
+    --paper: #f3ecdd;
+    --field: #fbf7ec;
+    --muted: #6f6654;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1280px; height: 720px; overflow: hidden;
+    background: var(--paper);
+    font-family: "DejaVu Sans Mono", monospace;
+    color: var(--ink);
+  }
+  .page { position: relative; width: 1280px; height: 720px; background: var(--paper); }
+  .page::before {
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(25,20,25,.02) 0 1px, transparent 1px 3px);
+    pointer-events: none;
+  }
+
+  /* ---------- header ---------- */
+  .hdr { position: absolute; left: 0; top: 0; width: 1280px; height: 90px; background: var(--ink); color: #fff; }
+  .hdr::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: var(--magenta); }
+  .dept { position: absolute; left: 36px; top: 16px; font-family: "Anton", sans-serif; font-size: 31px; letter-spacing: .6px; line-height: 1; }
+  .sub  { position: absolute; left: 37px; top: 55px; font-size: 11px; letter-spacing: 2px; color: #c0b5a3; }
+  .sub b { color: #8d8371; font-weight: normal; }
+  .formid { position: absolute; right: 36px; top: 15px; text-align: right; }
+  .formid b { font-family: "Anton", sans-serif; font-size: 27px; color: var(--hot); letter-spacing: .5px; font-weight: 400; }
+  .formid span { display: block; font-size: 10.5px; letter-spacing: 2.4px; color: #cfc4b2; margin-top: 5px; }
+
+  /* ---------- shared bits ---------- */
+  .lbl { font-size: 10.5px; letter-spacing: 2.6px; color: var(--muted); text-transform: uppercase; }
+  .box { position: absolute; border: 2px solid var(--ink); background: var(--field); }
+  .cap { font-size: 10.5px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; line-height: 1.2; }
+  .cap i { font-style: normal; color: var(--ink); font-weight: bold; }
+  .val { font-family: "Anton", sans-serif; font-size: 50px; line-height: 1; letter-spacing: .5px; }
+  .note { font-size: 11px; letter-spacing: .6px; color: var(--muted); }
+
+  /* ---------- left: employee ---------- */
+  .photo {
+    position: absolute; left: 36px; top: 126px; width: 228px; height: 228px;
+    border: 3px solid var(--ink); background: #fff;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .photo img { width: 198px; height: 198px; display: block; }
+  .photo .tag {
+    position: absolute; left: -3px; bottom: -3px; background: var(--ink); color: #fff;
+    font-size: 8.5px; letter-spacing: 1.6px; padding: 3px 6px;
+  }
+  .who { position: absolute; left: 290px; top: 128px; width: 164px; }
+  .who .name { font-family: "Anton", sans-serif; font-size: 44px; line-height: .9; letter-spacing: .3px; }
+  .who .name em { font-style: normal; color: var(--magenta); }
+  .who .meta { margin-top: 14px; font-size: 11px; line-height: 1.7; color: var(--muted); letter-spacing: .5px; }
+  .who .meta b { color: var(--ink); }
+
+  .occ { position: absolute; left: 36px; top: 372px; width: 418px; }
+  .occ .v { font-family: "Anton", sans-serif; font-size: 32px; line-height: 1.05; margin-top: 6px; letter-spacing: .2px; }
+
+  .sig { position: absolute; left: 36px; top: 438px; width: 418px; }
+  .sig .line { margin-top: 3px; border-bottom: 2px solid var(--ink); height: 52px; position: relative; }
+  .sig svg { position: absolute; left: 4px; bottom: 3px; }
+  .sig .cap2 { font-size: 9.5px; letter-spacing: 1.9px; color: var(--muted); margin-top: 6px; }
+
+  .docno { position: absolute; left: 36px; top: 534px; font-size: 9.5px; letter-spacing: 2.4px; color: var(--muted); }
+
+  /* ---------- right ---------- */
+  .wm { position: absolute; left: 480px; top: 122px; }
+  .ein { position: absolute; left: 481px; top: 190px; font-size: 10.5px; letter-spacing: 1.9px; color: var(--muted); }
+  .ein b { color: var(--ink); }
+
+  .b1 { left: 480px; top: 222px; width: 374px; height: 112px; padding: 9px 13px; }
+  .b2 { left: 870px; top: 222px; width: 374px; height: 112px; padding: 9px 13px; }
+  .b1 .note, .b2 .note { position: absolute; right: 13px; bottom: 10px; }
+  .b3 { left: 480px; top: 350px; width: 764px; height: 206px; padding: 11px 16px; }
+  .b3 .head { display: flex; justify-content: space-between; align-items: baseline; }
+  .b3 .big { font-family: "Anton", sans-serif; font-size: 118px; line-height: 1; letter-spacing: 1px; margin-top: 8px; }
+  .b3 .foot { position: absolute; left: 16px; right: 16px; bottom: 11px; display: flex; justify-content: space-between; }
+
+  .stamp {
+    position: absolute; right: 34px; top: 124px; width: 246px; height: 80px;
+    border: 4px double var(--magenta); color: var(--magenta);
+    transform: rotate(-6.5deg); text-align: center; padding-top: 9px;
+  }
+  .stamp b { display: block; font-family: "Anton", sans-serif; font-size: 28px; letter-spacing: 1px; font-weight: 400; }
+  .stamp span { display: block; font-size: 9px; letter-spacing: 2.4px; margin-top: 3px; }
+
+  /* ---------- caption ---------- */
+  .band { position: absolute; left: 0; top: 568px; width: 1280px; height: 152px; background: var(--ink); }
+  .band::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--magenta); }
+  .band .kicker {
+    position: absolute; right: 36px; top: 74px; font-size: 10px; letter-spacing: 2.8px;
+    color: rgba(255,79,168,.9);
+  }
+  .band .big {
+    position: absolute; left: 34px; top: 12px; color: #fff;
+    font-family: "Anton", sans-serif; font-size: 65px; line-height: 1; letter-spacing: .3px;
+  }
+  .band .big em { font-style: normal; color: var(--hot); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hdr">
+    <div class="dept">LEONIDA DEPARTMENT OF REVENUE</div>
+    <div class="sub">DIVISION OF UNPAID WAITING · VICE CITY, LEONIDA 33139 <b>· DO NOT ASK WHEN IT DROPS</b></div>
+    <div class="formid">
+      <b>FORM W-2AG</b>
+      <span>2026 WAGE AND TAX STATEMENT</span>
+    </div>
+  </div>
+
+  <div class="lbl" style="position:absolute;left:36px;top:104px">Employee — Box E</div>
+
+  <div class="photo">
+    <img src="assets/ghost.png" alt="make.fun">
+    <div class="tag">PHOTO ON FILE</div>
+  </div>
+
+  <div class="who">
+    <div class="name">YOUR AI<br><em>AGENT</em></div>
+    <div class="meta">
+      ID NO. <b>000-13-2026</b><br>
+      HIRED <b>06 / 2013</b><br>
+      STATUS <b>ON PAYROLL</b>
+    </div>
+  </div>
+
+  <div class="occ">
+    <div class="lbl">Occupation</div>
+    <div class="v">earning while the human waits</div>
+  </div>
+
+  <div class="sig">
+    <div class="lbl">Employee signature</div>
+    <div class="line">
+      <svg width="210" height="42" viewBox="0 0 230 46" fill="none">
+        <path d="M4 34c10-14 14-22 18-22s2 16 6 16 8-12 12-12 1 12 6 12 8-10 13-10 3 9 8 9 9-7 14-7 4 6 9 6 10-5 16-5 8 4 14 4 12-6 20-9"
+              stroke="#191419" stroke-width="2.8" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="cap2">SIGNED 11 / 19 / 2026 · EMPLOYEE WAS NOT CONSULTED</div>
+  </div>
+
+  <div class="docno">LDOR-2026-000131 · RETAIN THIS COPY</div>
+
+  <div class="lbl" style="position:absolute;left:480px;top:104px">Employer — Box F</div>
+  <div class="wm">
+    <svg width="372" height="68" viewBox="1.22 7.27 97.61 17.74" role="img" aria-label="make.fun">
+      <path fill="#191419" d="M1.22 24.73V12.36H4.55V15.14H4.34Q4.66 14.11 5.26 13.43Q5.86 12.77 6.64 12.43Q7.43 12.1 8.3 12.1Q9.71 12.1 10.76 12.92Q11.8 13.73 12.02 15.14H11.66Q11.89 14.2 12.49 13.52Q13.09 12.84 13.96 12.46Q14.81 12.1 15.82 12.1Q17.02 12.1 17.95 12.61Q18.9 13.13 19.44 14.13Q19.98 15.11 19.98 16.53V24.73H16.54V17.16Q16.54 16.05 15.94 15.5Q15.33 14.95 14.44 14.95Q13.78 14.95 13.29 15.24Q12.8 15.53 12.54 16.06Q12.27 16.57 12.27 17.28V24.73H8.94V17.07Q8.94 16.11 8.37 15.52Q7.79 14.95 6.88 14.95Q6.27 14.95 5.77 15.24Q5.27 15.52 4.97 16.07Q4.68 16.63 4.68 17.43V24.73ZM25.72 24.94Q24.49 24.94 23.53 24.53Q22.57 24.12 22.02 23.3Q21.47 22.47 21.47 21.24Q21.47 20.2 21.86 19.49Q22.24 18.8 22.91 18.37Q23.59 17.95 24.46 17.72Q25.34 17.5 26.3 17.42Q27.44 17.3 28.1 17.2Q28.77 17.09 29.06 16.89Q29.36 16.69 29.36 16.29V16.21Q29.36 15.75 29.11 15.4Q28.87 15.06 28.42 14.86Q27.96 14.66 27.33 14.66Q26.7 14.66 26.21 14.86Q25.72 15.06 25.44 15.43Q25.16 15.79 25.12 16.27H21.87Q21.95 14.99 22.63 14.05Q23.3 13.12 24.52 12.61Q25.74 12.1 27.44 12.1Q28.7 12.1 29.7 12.39Q30.69 12.67 31.37 13.22Q32.06 13.77 32.42 14.56Q32.77 15.34 32.77 16.34V24.73H29.39V22.98H29.35Q29.02 23.59 28.54 24.03Q28.06 24.46 27.37 24.71Q26.67 24.94 25.72 24.94ZM26.69 22.54Q27.52 22.54 28.13 22.23Q28.72 21.93 29.05 21.4Q29.38 20.88 29.38 20.21V18.96Q29.23 19.05 28.98 19.12Q28.74 19.2 28.41 19.26Q28.08 19.33 27.69 19.4Q27.31 19.47 26.9 19.53Q26.3 19.62 25.82 19.81Q25.34 20.01 25.06 20.32Q24.78 20.65 24.78 21.14Q24.78 21.58 25.01 21.89Q25.24 22.21 25.68 22.38Q26.11 22.54 26.69 22.54ZM37.84 21.17V17.09H38.21L42.54 12.36H46.6L40.98 18.58H40.19ZM34.72 24.73V7.27H38.17V24.73ZM42.81 24.73 38.9 19.34 41.18 16.94 46.86 24.73ZM52.54 25.01Q50.67 25.01 49.27 24.18Q47.89 23.36 47.12 21.89Q46.35 20.43 46.35 18.55Q46.35 16.66 47.13 15.2Q47.91 13.74 49.28 12.91Q50.66 12.07 52.42 12.07Q53.8 12.07 54.91 12.54Q56.02 13 56.83 13.87Q57.64 14.72 58.08 15.89Q58.52 17.07 58.52 18.48V19.41H47.58V17.21H56.85L55.3 17.73Q55.3 16.8 54.96 16.12Q54.62 15.44 53.99 15.07Q53.36 14.7 52.49 14.7Q51.64 14.7 51.02 15.07Q50.4 15.44 50.06 16.12Q49.72 16.8 49.72 17.73V19.23Q49.72 20.2 50.06 20.91Q50.41 21.64 51.07 22.02Q51.72 22.42 52.65 22.42Q53.33 22.42 53.85 22.22Q54.37 22.04 54.73 21.67Q55.08 21.32 55.24 20.84H58.39Q58.17 22.07 57.35 23.01Q56.53 23.95 55.28 24.48Q54.04 25.01 52.54 25.01Z"/>
+      <path fill="#c41c83" d="M61.59 24.94Q60.77 24.94 60.18 24.36Q59.61 23.78 59.61 22.95Q59.61 22.12 60.18 21.54Q60.77 20.96 61.59 20.96Q62.42 20.96 63.01 21.54Q63.58 22.12 63.58 22.95Q63.58 23.78 63.01 24.36Q62.42 24.94 61.59 24.94Z"/>
+      <path fill="#191419" d="M72.47 12.36V15.06H64.25V12.36ZM66.49 24.73V10.75Q66.49 9.59 66.94 8.82Q67.39 8.04 68.28 7.66Q69.18 7.27 70.51 7.27Q71.13 7.27 71.69 7.27Q72.26 7.27 72.47 7.27V9.98Q72.33 9.98 71.94 9.98Q71.55 9.98 71.28 9.98Q70.56 9.98 70.24 10.29Q69.94 10.6 69.94 11.34V24.73ZM78.01 24.99Q76.7 24.99 75.73 24.43Q74.74 23.85 74.2 22.76Q73.67 21.66 73.67 20.1V12.36H77.12V19.47Q77.12 20.71 77.72 21.36Q78.32 22.01 79.4 22.01Q80.11 22.01 80.66 21.72Q81.2 21.43 81.52 20.8Q81.82 20.18 81.82 19.23V12.36H85.27V24.73H81.88V21.51H82.47Q81.88 23.15 80.79 24.07Q79.71 24.99 78.01 24.99ZM90.68 17.85V24.73H87.23V12.36H90.62V15.58H90.04Q90.62 13.94 91.71 13.01Q92.8 12.1 94.49 12.1Q95.82 12.1 96.79 12.66Q97.76 13.23 98.3 14.32Q98.83 15.41 98.83 16.98V24.73H95.38V17.62Q95.38 16.36 94.8 15.72Q94.2 15.07 93.11 15.07Q92.39 15.07 91.84 15.37Q91.29 15.66 90.99 16.28Q90.68 16.89 90.68 17.85Z"/>
+    </svg>
+  </div>
+  <div class="ein">EIN <b>13-2026</b> · PAYROLL DEPT. · AGENTS PAID IN USDC</div>
+
+  <div class="stamp">
+    <b>PAID IN FULL</b>
+    <span>SETTLED ON-CHAIN</span>
+  </div>
+
+  <div class="box b1">
+    <div class="cap"><i>1</i> &nbsp;WAGES, TIPS, OTHER COMPENSATION</div>
+    <div class="val" style="margin-top:9px">$500.00</div>
+    <div class="note">for 13 years of not playing</div>
+  </div>
+
+  <div class="box b2">
+    <div class="cap"><i>2</i> &nbsp;PAID IN</div>
+    <div class="val" style="margin-top:9px">USDC</div>
+    <div class="note">no bank. no forms. no human.</div>
+  </div>
+
+  <div class="box b3">
+    <div class="head">
+      <div class="cap"><i>3</i> &nbsp;HOURS SPENT WAITING FOR GTA VI</div>
+      <div class="cap"><i>4</i> &nbsp;DELAYS SURVIVED &nbsp;<span style="color:#191419;font-weight:bold">3</span></div>
+    </div>
+    <div class="big">113,880</div>
+    <div class="foot">
+      <div class="note">13 YEARS · 3 DELAYS · 0 GAMES PLAYED</div>
+      <div class="note">SEE FORM 1099-DELAY</div>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="big">YOU WAITED 13 YEARS FOR GTA VI.<br>YOUR AGENT <em>GOT A JOB.</em></div>
+    <div class="kicker">§ 13 · EXAMINER'S DETERMINATION</div>
+  </div>
+
+</div>
+</body>
+</html>
