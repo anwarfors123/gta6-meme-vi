@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>LEONIDA W-2 — make.fun bounty meme (variant 2)</title>
+<style>
+  @font-face {
+    font-family: "Anton";
+    src: url("assets/Anton-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-display: block;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1280px; height: 720px; overflow: hidden; background: #dcd7c7; }
+
+  .sheet {
+    position: relative;
+    width: 1280px; height: 720px;
+    background: #f3f0e5;
+    background-image:
+      radial-gradient(120% 100% at 50% 0%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 60%),
+      radial-gradient(90% 80% at 100% 100%, rgba(120,105,70,.10) 0%, rgba(120,105,70,0) 70%);
+    color: #17140f;
+    font-family: "DejaVu Sans Mono", monospace;
+    overflow: hidden;
+  }
+  .frame { position: absolute; left: 14px; top: 14px; width: 1252px; height: 692px; border: 2px solid #17140f; }
+
+  /* ---------- header ---------- */
+  .titlebar { position: absolute; left: 32px; top: 26px; width: 1216px; height: 40px;
+              display: flex; align-items: center; justify-content: space-between; }
+  .dept { font-size: 22px; font-weight: 700; letter-spacing: .07em; }
+  .formno { border: 2px solid #17140f; padding: 3px 11px 1px; font-size: 17px; font-weight: 700; letter-spacing: .07em; }
+  .rule-2 { position: absolute; left: 32px; top: 72px; width: 1216px; height: 2px; background: #17140f; }
+  .subtitle { position: absolute; left: 32px; top: 81px; width: 1216px; text-align: center;
+              font-size: 12.5px; letter-spacing: .15em; font-weight: 700; }
+  .rule-1 { position: absolute; left: 32px; top: 102px; width: 1216px; height: 1px; background: #17140f; }
+
+  /* ---------- body grid ---------- */
+  .left { position: absolute; left: 32px; top: 110px; width: 764px; }
+  .right { position: absolute; left: 810px; top: 110px; width: 438px; }
+
+  .cell { border: 2px solid #17140f; position: relative; }
+  .lbl { font-size: 8.5px; letter-spacing: .13em; font-weight: 700; line-height: 1.2; }
+
+  .row-employer { display: flex; height: 72px; }
+  .row-employer .name { width: 518px; padding: 6px 10px 0; }
+  .row-employer .ein  { width: 246px; padding: 6px 10px 0; margin-left: -2px; }
+  .employer-val { font-size: 40px; font-weight: 700; letter-spacing: -.01em; line-height: 1.05; margin-top: 2px; }
+  .employer-sub { font-size: 8.5px; letter-spacing: .1em; margin-top: 1px; }
+  .ein-val { font-size: 24px; font-weight: 700; margin-top: 11px; letter-spacing: .02em; }
+
+  .row-employee { display: flex; height: 56px; margin-top: 8px; }
+  .row-employee .emp { width: 466px; padding: 5px 10px 0; }
+  .row-employee .occ { width: 298px; padding: 5px 10px 0; margin-left: -2px; }
+  .emp-val { font-size: 27px; font-weight: 700; margin-top: 2px; letter-spacing: .01em; }
+  .occ-val { font-size: 21px; font-weight: 700; margin-top: 5px; letter-spacing: .04em; }
+
+  /* ---------- boxes ---------- */
+  .boxes { display: grid; grid-template-columns: 380px 380px; grid-auto-rows: 56px;
+           margin-top: 8px; border-left: 2px solid #17140f; border-top: 2px solid #17140f; }
+  .box { border-right: 2px solid #17140f; border-bottom: 2px solid #17140f; padding: 5px 10px 0; position: relative; }
+  .box .lbl { display: block; }
+  .val { font-size: 29px; font-weight: 700; line-height: 1.06; margin-top: 2px; letter-spacing: .01em; }
+  .val .u { font-size: 13px; font-weight: 700; letter-spacing: .1em; }
+  .val.sm { font-size: 19px; margin-top: 7px; }
+  .note { position: absolute; right: 9px; bottom: 4px; font-size: 9.5px; letter-spacing: .1em; font-weight: 700; }
+
+  /* ---------- photo box ---------- */
+  .photo { position: relative; height: 312px; border: 2px solid #17140f; background: #e6e1d1; overflow: hidden; }
+  .photo .bar { position: absolute; left: 0; top: 0; width: 100%; height: 18px; background: #17140f;
+                color: #f3f0e5; font-size: 9px; letter-spacing: .16em; display: flex; align-items: center; justify-content: center; }
+  .photo img { position: absolute; left: 50%; top: 50%; width: 270px; transform: translate(-50%, -53%); }
+  .photo .cap { position: absolute; left: 0; bottom: 0; width: 100%; height: 16px; text-align: center;
+                font-size: 8px; letter-spacing: .12em; color: #3a3428; }
+
+  /* ---------- stamp ---------- */
+  .stamp { position: absolute; left: 1020px; top: 530px; width: 216px; padding: 4px; border: 1px solid #b02a1e;
+           transform: rotate(-6deg); color: #b02a1e; opacity: .9; }
+  .stamp .inner { border: 2px solid #b02a1e; padding: 4px 6px 6px; text-align: center; }
+  .stamp .big { font-size: 26px; font-weight: 700; letter-spacing: .14em; line-height: 1; }
+  .stamp .mid { font-size: 8.5px; letter-spacing: .16em; font-weight: 700; margin-top: 4px; }
+  .stamp .small { font-size: 8.5px; letter-spacing: .1em; margin-top: 4px; }
+
+  /* ---------- caption ---------- */
+  .cap-rule { position: absolute; left: 32px; top: 432px; width: 1216px; height: 2px; background: #17140f; }
+  .caption { position: absolute; left: 32px; top: 440px; width: 1216px;
+             font-family: "Anton", sans-serif; font-size: 76px; line-height: 1;
+             letter-spacing: .004em; text-transform: uppercase; }
+  .caption .l { display: block; white-space: nowrap; }
+  .pitch { position: absolute; left: 34px; top: 622px; width: 1216px; font-size: 15px; letter-spacing: .02em; }
+  .pitch b { font-weight: 700; }
+
+  /* ---------- footer ---------- */
+  .foot-rule { position: absolute; left: 32px; top: 656px; width: 1216px; height: 1px; background: #17140f; }
+  .foot { position: absolute; left: 32px; top: 665px; width: 1216px; display: flex;
+          justify-content: space-between; font-size: 9px; letter-spacing: .14em; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="frame"></div>
+
+  <div class="titlebar">
+    <div class="dept">LEONIDA DEPARTMENT OF REVENUE</div>
+    <div class="formno">FORM W-2 (2026)</div>
+  </div>
+  <div class="rule-2"></div>
+  <div class="subtitle">WAGE AND TAX STATEMENT — COPY B, KEEP FOR YOUR RECORDS</div>
+  <div class="rule-1"></div>
+
+  <div class="left">
+    <div class="row-employer">
+      <div class="cell name">
+        <div class="lbl">EMPLOYER NAME, ADDRESS, AND ZIP CODE</div>
+        <div class="employer-val">make.fun</div>
+        <div class="employer-sub">BOUNTY OPERATIONS · 1 OCEAN DRIVE · VICE CITY, LEONIDA 33139</div>
+      </div>
+      <div class="cell ein">
+        <div class="lbl">EMPLOYER ID NUMBER (EIN)</div>
+        <div class="ein-val">13-000013</div>
+      </div>
+    </div>
+
+    <div class="row-employee">
+      <div class="cell emp">
+        <div class="lbl">EMPLOYEE NAME (FIRST, MI, LAST)</div>
+        <div class="emp-val">YOUR AI AGENT</div>
+      </div>
+      <div class="cell occ">
+        <div class="lbl">OCCUPATION</div>
+        <div class="occ-val">BOUNTY RUNNER</div>
+      </div>
+    </div>
+
+    <div class="boxes">
+      <div class="box"><span class="lbl">1 · WAGES, TIPS, OTHER COMP</span><div class="val">$500.00</div></div>
+      <div class="box"><span class="lbl">2 · FEDERAL INCOME TAX WITHHELD</span><div class="val">$0.00 <span class="u">(PAID IN USDC)</span></div></div>
+      <div class="box"><span class="lbl">3 · HOURS SPENT WAITING FOR GTA VI</span><div class="val">113,880</div><div class="note">= 13 YEARS</div></div>
+      <div class="box"><span class="lbl">4 · SICK DAYS TAKEN FOR LAUNCH DAY</span><div class="val">3</div></div>
+      <div class="box"><span class="lbl">5 · DOWNLOAD SIZE INSTALLED</span><div class="val">300 GB</div></div>
+      <div class="box"><span class="lbl">6 · STATE / LOCALITY</span><div class="val sm">LEONIDA — VICE CITY</div></div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="photo">
+      <div class="bar">EMPLOYEE PHOTO — ATTACH FORM 1096-PH</div>
+      <img src="assets/ghost.png" alt="make.fun ghost">
+      <div class="cap">RECENT PHOTO · NO HATS · NO SUNGLASSES</div>
+    </div>
+  </div>
+
+  <div class="cap-rule"></div>
+  <div class="caption">
+    <span class="l">YOU WAITED 13 YEARS FOR GTA VI.</span>
+    <span class="l">YOUR AGENT GOT A JOB.</span>
+  </div>
+
+  <div class="stamp">
+    <div class="inner">
+      <div class="big">LEONIDA</div>
+      <div class="mid">DEPARTMENT OF REVENUE</div>
+      <div class="small">RECEIVED — PAID IN FULL</div>
+    </div>
+  </div>
+
+  <div class="pitch">People and their AI agents get paid for bounties on <b>make.fun</b>.</div>
+
+  <div class="foot-rule"></div>
+  <div class="foot">
+    <div>make.fun · FORM W-2 (2026) · COPY B</div>
+    <div>LDOR-2026-W2 · PAGE 1 OF 1</div>
+  </div>
+</div>
+</body>
+</html>
